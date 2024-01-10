@@ -1,0 +1,52 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <link rel="stylesheet" href="css/style.css">
+  <meta name="description" content="">
+
+  <meta property="og:title" content="">
+  <meta property="og:type" content="">
+  <meta property="og:url" content="">
+  <meta property="og:image" content="">
+
+  <link rel="apple-touch-icon" href="icon.png">
+
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+
+<!-- Add your site or application content here -->
+<p>Hello world! This is HTML5 Boilerplate.</p>
+<button id="hide">Hide</button>
+<button id="show">Show</button>
+<p>By default, all HTML elements have a static position, and cannot be moved.<br> To manipulate the position, remember
+  to first set the CSS position property<br> od the element to relative, fixed, or absolute</p>
+<div style="background:#98bf21; height:100px; width:200px; position:absolute">Hello
+  <button id="animate1">Animate</button></div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function () {
+    $("#hide").click(function () {
+      $("p").hide();
+    });
+    $("#show").click(function () {
+      $("p").show();
+    });
+    $("#animate1").click(function () {
+      let div = $("div");
+      div.animate({left: '100px'}, "slow");
+      div.animate({fontSize: '50px'}, "slow");
+    });
+  });
+</script>
+
+</body>
+
+</html>

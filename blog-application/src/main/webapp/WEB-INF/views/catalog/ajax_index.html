@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ListCatalog</title>
+</head>
+<body>
+<h3>Blogs</h3>
+<br>
+<label>
+    <input type="text" placeholder="search" id="search-input">
+</label>
+<button onclick="search()">Search</button>
+<div id="search_list"></div>
+
+<br>
+<div id="blogs_list"></div>
+<button onclick="load()">Load more</button>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/api/blogs",
+
+            success: function (response) {
+                let data = response.content;
+                let content = ' <table id="display-list" border="1"><tr>\n' +
+                    ' <th>Title</th>\n' +
+                    ' <th>Content</th>\n' +
+                    ' <th>Author</th>\n' +
+                    ' <th>Catalog</th>\n' +
+                    ' </tr>';
+
+                for (let i = 0; i < data.length; i++) {
+                    content += getBlog(data[i]);
+                }
+
+                $('#blogs_list').html(content);
+            }
+        });
+    });
+
+    function getBlog(blog) {
+        return `<tr><td> ${blog.title}</td>` +
+            `<td> ${blog.content}</td>` +
+            `<td> ${blog.author}</td>` +
+            `<td> ${blog.catalog.name}</td></tr>`
+    }
+
+    function search() {
+        let word = $("#search-input").val();
+        $.ajax({
+                type: "GET",
+                url: `http://localhost:8080/api/blogs/search?word=` + word,
+                success: function (data) {
+                    let content = '<p>Search list</p> <table id="display-list" border="1"><tr>\n' +
+                        ' <th>Title</th>\n' +
+                        ' <th>Content</th>\n' +
+                        ' <th>Author</th>\n' +
+                        ' <th>Catalog</th>\n' +
+                        ' </tr>';
+
+                    for (let i = 0; i < data.length; i++) {
+                        content += getBlog(data[i]);
+                    }
+
+                    $('#search_list').html(content);
+                    // document.getElementById("blogs_list").style.display = "none";
+                }
+            }
+        )
+    }
+
+    function load() {
+        $.ajax({
+                type: "GET",
+                url: `http://localhost:8080/api/blogs/load`,
+                success: function (response) {
+                    let data = response.content;
+                    let content = '<table id="display-list" border="1"><tr>\n' +
+                        ' <th>Title</th>\n' +
+                        ' <th>Content</th>\n' +
+                        ' <th>Author</th>\n' +
+                        ' <th>Catalog</th>\n' +
+                        ' </tr>';
+
+                    for (let i = 0; i < data.length; i++) {
+                        content += getBlog(data[i]);
+                    }
+
+                    $('#blogs_list').html(content);
+                }
+            }
+        )
+    }
+
+</script>
+</body>
+</html>
